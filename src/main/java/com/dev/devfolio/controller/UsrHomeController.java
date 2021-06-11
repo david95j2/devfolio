@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UsrHomeController {
 	
 	@RequestMapping("usr/home/main")
-	@ResponseBody
 	public String showMainPage() {
-		return "메인페이지";
+		return "usr/home/main";
 	}
 }
