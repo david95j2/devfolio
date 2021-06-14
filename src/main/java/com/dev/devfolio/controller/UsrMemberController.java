@@ -24,22 +24,6 @@ public class UsrMemberController {
 		return "usr/member/join";
 	}
 	
-	@RequestMapping("usr/member/doJoin")
-	@ResponseBody
-	public String doJoin(@RequestParam Map<String, Object> param) {
-		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
-		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
-		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
-		String loginPwReal = (String) param.get("loginPwReal");
-		
-		param.put("loginPwReal", loginPwReal);
-		param.put("email", email);
-
-		memberService.join(param);
-		
-		return Util.msgAndReplace(msg,redirectUrl);
-	}
-	
 	@RequestMapping("usr/member/loginIdCheck")
 	@ResponseBody
 	public int loginIdCheck(@RequestParam Map<String, Object> param) {
@@ -54,6 +38,22 @@ public class UsrMemberController {
 		String nickname = (String) param.get("nickname");
 		int result = memberService.nicknameCheck(nickname);
 		return result;
+	}	
+	
+	@RequestMapping("usr/member/doJoin")
+	@ResponseBody
+	public String doJoin(@RequestParam Map<String, Object> param) {
+		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
+		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
+		String loginPwReal = (String) param.get("loginPwReal");
+		
+		param.put("loginPwReal", loginPwReal);
+		param.put("email", email);
+
+		memberService.join(param);
+		
+		return Util.msgAndReplace(msg,redirectUrl);
 	}
 	
 	@RequestMapping("usr/member/login")
@@ -76,5 +76,13 @@ public class UsrMemberController {
 		redirectUrl = Util.ifEmpty(redirectUrl, "/usr/home/main");
 
 		return Util.msgAndReplace(msg, redirectUrl);
-	}		
+	}
+	
+	@RequestMapping("usr/member/doLogout")
+	@ResponseBody
+	public String doLogout(HttpSession session) {
+		session.removeAttribute("loginedMemberId");
+
+		return Util.msgAndReplace("로그아웃 되었습니다.", "../home/main");
+	}	
 }

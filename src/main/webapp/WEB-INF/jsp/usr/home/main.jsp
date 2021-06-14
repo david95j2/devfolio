@@ -19,6 +19,8 @@
 <c:if test="${ isLogined == true }">
 	<br />
 	<h2>${loginedMember.getNickname() }님 환영합니다.</h2>
+	<br />
+	<a href="../member/doLogout">로그아웃</a>
 </c:if>
 
 <%@ include file="../part/foot.jspf"%>
