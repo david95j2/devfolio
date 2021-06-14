@@ -20,5 +20,9 @@
 <title>사용자 페이지</title>
 
 <link rel="stylesheet" href="/resource/common.css" />
+
+<%="<script>"%>
+const param = ${paramJson};
+<%="</script>"%>
 </head>
 <body>

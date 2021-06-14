@@ -41,4 +41,16 @@ public class MemberService {
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
 	}
+	
+	public Member getMemberByAuthKey(String authKey) {
+		return memberDao.getMemberByAuthKey(authKey);
+	}
+
+	public Member getMemberById(int id) {
+		return memberDao.getMemberById(id);
+	}
+	
+	public boolean isAdmin(Member actor) {
+		return actor.getAuthLevel() == 7;
+	}	
 }

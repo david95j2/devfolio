@@ -31,4 +31,15 @@
 		WHERE nickname = #{nickname}
 	</select>	
 
+	<select id="getMemberByAuthKey" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE authKey = #{authKey}
+	</select>
+	
+	<select id="getMemberById" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE id = #{id}
+	</select>	
 </mapper>

@@ -14,4 +14,8 @@ public interface MemberDao {
 	Member getMemberByLoginId(@Param("loginId") String loginId);
 
 	Member getMemberByNickname(@Param("nickname") String nickname);
+
+	Member getMemberByAuthKey(@Param("authKey") String authKey);
+
+	Member getMemberById(@Param("id") int id);
 }
