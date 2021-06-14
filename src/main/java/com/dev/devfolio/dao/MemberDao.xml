@@ -10,16 +10,13 @@
 		INTO member
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId =
-		#{loginId},
-		loginPw = #{loginPw},
+		loginId = #{loginId},
+		loginPw = #{loginPwReal},
 		`name` = #{name},
-		nickname =
-		#{nickname},
+		nickname = #{nickname},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email},
-		authKey =
-		CONCAT("authKey1__", UUID(), "__", RAND())
+		authKey = CONCAT("authKey1__", UUID(), "__", RAND())
 	</insert>
 
 	<select id="getMemberByLoginId" resultType="Member">

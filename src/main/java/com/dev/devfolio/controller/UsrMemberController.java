@@ -2,13 +2,15 @@ package com.dev.devfolio.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dev.devfolio.dto.Member;
 import com.dev.devfolio.service.MemberService;
 import com.dev.devfolio.util.Util;
 
@@ -27,9 +29,12 @@ public class UsrMemberController {
 	public String doJoin(@RequestParam Map<String, Object> param) {
 		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
 		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
-		param.put("email", email);
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
-		System.out.println("결과는? : "+redirectUrl+" 입니다.");
+		String loginPwReal = (String) param.get("loginPwReal");
+		
+		param.put("loginPwReal", loginPwReal);
+		param.put("email", email);
+
 		memberService.join(param);
 		
 		return Util.msgAndReplace(msg,redirectUrl);
@@ -49,5 +54,27 @@ public class UsrMemberController {
 		String nickname = (String) param.get("nickname");
 		int result = memberService.nicknameCheck(nickname);
 		return result;
+	}
+	
+	@RequestMapping("usr/member/login")
+	public String showLoginPage() {
+		return "usr/member/login";
+	}	
+	
+	@RequestMapping("usr/member/doLogin")
+	@ResponseBody
+	public String doLogin(String loginId, String loginPwReal, String redirectUrl, HttpSession session) {
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member == null) return Util.msgAndBack("존재하지 않는 아이디입니다.");
+		else if (member.getLoginPw().equals(loginPwReal) == false) return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
+		
+		session.setAttribute("loginedMemberId", member.getId());
+
+		String msg = String.format("%s님 환영합니다.", member.getNickname());
+
+		redirectUrl = Util.ifEmpty(redirectUrl, "/usr/home/main");
+
+		return Util.msgAndReplace(msg, redirectUrl);
 	}		
 }

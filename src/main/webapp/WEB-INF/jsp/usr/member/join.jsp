@@ -3,7 +3,7 @@
 
 <%@ include file="../part/head.jspf"%>
 
-      
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>      
 
 <div class="lg:flex">
 
@@ -13,6 +13,7 @@
                     xl:text-bold">JOIN</h2>
       <div class="mt-12">
         <form class="join" action="doJoin" method="POST" onsubmit="JoinForm__checkAndSubmit(this); return false;">
+          <input type="hidden" name="loginPwReal"/>
           <div>
             <div class="text-sm font-bold text-gray-700 tracking-wide">ID</div>
             <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Enter your ID" id="user_id" autofocus="autofocus" name="loginId">
@@ -20,12 +21,12 @@
           </div>
           <div class="mt-8">
             <div class="text-sm font-bold text-gray-700 tracking-wide">password</div>
-            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="password" placeholder="Enter your password" id="user_pw" autofocus="autofocus" name="loginPw">
+            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="password" placeholder="Enter your password" id="user_pw" autofocus="autofocus">
             <div class="text-sm font-bold text-gray-700" id="pw_check"></div>
           </div>
           <div class="mt-8">
             <div class="text-sm font-bold text-gray-700 tracking-wide">passwordConfirm</div>
-            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="password" placeholder="Enter your passwordConfirm" id="user_pwReal" autofocus="autofocus">
+            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="password" placeholder="Enter your passwordConfirm" id="user_pwReal" autofocus="autofocus" name="loginPw">
           	<div class="text-sm font-bold text-gray-700" id="pwReal_check"></div>
           </div>
           <div class="mt-8">
@@ -76,6 +77,8 @@
         </div>
 
 <script>
+	let JoinForm__checkAndSubmitDone = false;
+
 	// id 규칙
 	const idRule = /^[a-zA-Z0-9]+$/;
 	var idRuleResult = false;
@@ -378,9 +381,9 @@
 			$('#phoneNum_check').text("");
 			cellphoneNoRuleResult = true;
 		}
-	});			
+	});	
 	
-	function JoinForm__checkAndSubmit(form) {
+	function JoinForm__checkAndSubmit(form) {	
 		if (idRuleResult == false) return $('#user_id').focus();
 		else if (pwRuleResult == false) return $('#user_pw').focus();
 		else if (pwRule2Result == false) return $('#user_pwReal').focus();
@@ -389,6 +392,9 @@
 		else if (emailRuleResult == false) return $('#user_email').focus();
 		else if (emailDomainRuleResult == false) return $('#user_emailDomain').focus();
 		else if (cellphoneNoRuleResult == false) return $('#user_phoneNum').focus();
+		
+		form.loginPwReal.value = sha256(form.loginPw.value);
+		form.loginPw.value = "";
 		
 		if (idRuleResult == true && pwRuleResult == true && nameRuleResult == true && nicknameRuleResult == true && emailRuleResult == true && emailDomailRuleResult == true && cellphoneNoRuleResult == true) {
 			form.submit();

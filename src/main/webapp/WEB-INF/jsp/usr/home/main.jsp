@@ -5,6 +5,11 @@
 
 <h1>메인페이지</h1>
 <h2>추후 구현</h2>
-<span></span>
+
+<br />
+<a href="../member/join">회원가입</a>
+<br />
+<a href="../member/login">로그인</a>
+
 
 <%@ include file="../part/foot.jspf"%>
