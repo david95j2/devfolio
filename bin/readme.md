@@ -3,18 +3,22 @@
 ### - 협업인원 (4명)
 ---
 ---
-## 1. Daily To do List
+## 1. Completion
+---
+- [x] 초기 계획 세우기
+
+## 2. Daily To do List
 - [ ] 계획 세우기 
 - [ ] 회원가입
 ---
-## 2. Weekly To do List
+## 3. Weekly To do List
 - 회원관련 작업
   - [ ] 회원가입
   - [ ] 회원탈퇴
   - [ ] 로그인
   - [ ] 로그아웃
 ---
-## 3. To do Later
+## 4. To do Later
 - Member
   - [ ] 회원가입
   - [ ] 회원탈퇴
@@ -45,4 +49,4 @@
   - [ ] 경고
   
 ---
-## 4. Memo
+## 5. Memo
