@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@ include file="../part/head.jspf"%>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>      
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>    
+<spring:eval expression="@environment.getProperty('kakao.loginApi.javaScript')" var="key" />      
 
 <div class="lg:flex">
 
@@ -71,12 +74,24 @@
         <div class="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
           SNS로 계정으로 간편하게 가입하세요..
           <div class="icon-block flex justify-center mt-8 text-4xl">
-            <div class="mr-8"><a href="#" class="hover:bg-opacity-80 bg-yellow-200 w-20 h-20 block rounded-full flex justify-center items-center"><i class="fas fa-comment"></i></a></div>
-            <div><a href="#" class="hover:bg-opacity-80 bg-green-600 text-white w-20 h-20 block rounded-full flex justify-center items-center"><span>N</span></a></div>
+            <div class="mr-8">
+            	<a href="#" class="hover:bg-opacity-80 bg-yellow-200 w-20 h-20 block rounded-full flex justify-center items-center" onclick="openPop()">
+            		<i class="fas fa-comment"></i>
+            	</a>
+            </div>
+            <div>
+            	<a href="#" class="hover:bg-opacity-80 bg-green-600 text-white w-20 h-20 block rounded-full flex justify-center items-center">
+            		<span>N</span>
+            	</a>
+            </div>
           </div>
         </div>
 
 <script>
+	function openPop(){
+	    var popup = window.open('https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=http://localhost:8090/usr/kakao/doLogin&response_type=code', '카카오로 로그인', 'width=450px,height=600px,scrollbars=no');
+	}
+
 	let JoinForm__checkAndSubmitDone = false;
 
 	// id 규칙

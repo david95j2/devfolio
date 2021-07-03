@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@ include file="../part/head.jspf"%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous"></script>
+<spring:eval expression="@environment.getProperty('kakao.loginApi.javaScript')" var="key" />
 
 <div class="lg:flex">
   <div class="lg:w-1/2 xl:max-w-screen-sm">
@@ -43,13 +46,21 @@
           <div class="mt-10">
             <button class="login-btn bg-main text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline shadow-lg">LOGIN</button>
           </div>
-        </form>
+        </form>  
 
         <div class="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
           SNS로 계정으로 간편하게 시작하세요.
           <div class="icon-block flex justify-center mt-8 text-4xl">
-            <div class="mr-8"><a href="#" class="hover:bg-opacity-80 bg-yellow-200 w-20 h-20 block rounded-full flex justify-center items-center"><i class="fas fa-comment"></i></a></div>
-            <div><a href="#" class="hover:bg-opacity-80 bg-green-600 text-white w-20 h-20 block rounded-full flex justify-center items-center"><span>N</span></a></div>
+            <div class="mr-8">
+            	<a href="#" class="hover:bg-opacity-80 bg-yellow-200 w-20 h-20 block rounded-full flex justify-center items-center" onclick="openPop()">
+            		<i class="fas fa-comment"></i>
+            	</a>
+            </div>
+            <div>
+            	<a href="#" class="hover:bg-opacity-80 bg-green-600 text-white w-20 h-20 block rounded-full flex justify-center items-center">
+            		<span>N</span>
+            	</a>
+            </div>
           </div>
         </div>
 
@@ -71,6 +82,10 @@
 </div>
 
 <script>
+	function openPop(){
+	    var popup = window.open('https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=http://localhost:8090/usr/kakao/doLogin&response_type=code', '카카오로 로그인', 'width=450px,height=600px,scrollbars=no');
+	}
+
 	let DoLoginForm__submited = false;
 
 	function DoLoginForm__submit(form) {

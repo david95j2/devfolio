@@ -52,5 +52,6 @@
   
 - etc
   - [ ] jsp 에서 vue로 전환  
+  - [ ] maven 에서 Gradle로 전환
 ---
 ## 5. Memo

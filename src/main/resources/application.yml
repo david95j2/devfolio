@@ -12,12 +12,24 @@ spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     #driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/devfolio?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
-    username: sbsst
-    password: sbs123414
+    url: ENC(QC2kbbNts+4F9QwXSqapIpltF1cKkbyqdRa4uEaAFUlIAVvRsdOi9U6nMiCWRqVIcoVZQ2TNeEejHWdUEil+sZx1XKbRMt4BwgPwACIUCBt9XI8i1WNnOyJNZZlsVUNzTaiYFILHWv75aExtaUhiYv0OMNhcDO709AFLTVdwXxyMdGLZuImtM8UFy/Q8WUScakoSApq4bq5BRaT5fIKet/oC//441VuVSUBtvYbgzlERASRXxY5/FWejFHUAZOysA1ugMuIBCM1O8m52/KmVzg==)
+    username: ENC(Xi6Fzi8XYAt+VJnxGX+9rQ==)
+    password: ENC(XfZ3KyYL/mLu52RPgPetcrfaOEYklVk4)
 mybatis:
   type-aliases-package: com.dev.devfolio.dto
 custom:
   logging:
     dir: log
     level: debug
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    
+---
+kakao:
+  loginApi:
+    restApi: ENC(Uja2u/o1hh76FkCZNcvhvoJUeivfxTi80p4hLCzVYiMgy+WYiYNWcYumAG/8v+MA)
+    javaScript: ENC(ffiUfn3Xl9LyzflALIA0xJ8M7gQShGSatRKiKCa7Auco4ZpEfa8aWgV6WivQGfFA)
+    redirectUrl:
+      login: http://localhost:8090/usr/kakao/doLogin
+      logout: http://localhost:8090/usr/kakao/logout
