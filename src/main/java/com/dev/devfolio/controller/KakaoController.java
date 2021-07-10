@@ -48,14 +48,16 @@ public class KakaoController {
 			result = "카카오톡 나에게 메시지 보내기에 성공하였습니다.";
 		}
 		
+		boolean isTrue = false;
+		if (userInfo.get("access_Token") != null) {
+			isTrue = true;
+		}
+		
 		// 5.session 값 셋팅
-		session.setAttribute("access_Token", access_Token);
+		session.setAttribute("isTrue", isTrue);
 		session.setAttribute("nickname", userInfo.get("nickname"));
-		session.setAttribute("result", result);
 		session.setAttribute("email", userInfo.get("email"));
 		session.setAttribute("emailDomain", userInfo.get("emailDomain"));
-		session.setAttribute("profile_image", userInfo.get("profile_image"));
-		session.setAttribute("thumbnail_image", userInfo.get("thumbnail_image"));
 		
 		return Util.pure(req, "<script> window.onload = function() { opener.parent.location='../member/join';"
 				+ " window.close();} </script>");

@@ -53,13 +53,10 @@ public class UsrMemberController {
 
 		memberService.join(param);
 		
-		session.removeAttribute("access_Token");
+		session.removeAttribute("isTrue");
 		session.removeAttribute("nickname");
-		session.removeAttribute("result");
 		session.removeAttribute("email");
 		session.removeAttribute("emailDomain");
-		session.removeAttribute("profile_image");
-		session.removeAttribute("thumbnail_image");		
 		
 		return Util.msgAndReplace(msg,redirectUrl);
 	}

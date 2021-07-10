@@ -17,6 +17,7 @@
 <!-- 반응형 필수 / 손가락 두번눌렀을때 확대 x -->
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 
+<link rel="shortcut icon" href="#">
 <title>사용자 페이지</title>
 
 <link rel="stylesheet" href="/resource/common.css" />
