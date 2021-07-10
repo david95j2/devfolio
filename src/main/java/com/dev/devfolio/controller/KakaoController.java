@@ -2,6 +2,7 @@ package com.dev.devfolio.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dev.devfolio.service.KakaoService;
+import com.dev.devfolio.util.Util;
 
 @Controller
 public class KakaoController {
@@ -23,14 +25,18 @@ public class KakaoController {
 		
 	// 카카오 로그인 테스트
 	@RequestMapping("usr/kakao/doLogin")
-	public String doLogin(HttpSession session, @RequestParam(value = "code", required = false) String code)
+	public String doLogin(HttpSession session, @RequestParam(value = "code", required = false) String code, HttpServletRequest req)
 			throws Exception {
 		// 1.인증코드 받기
 		System.out.println("### 인증코드 ### : " + code);
 
 		// 2.인증된 코드로 사용자토큰 받기
 		String access_Token = kakaoService.getAccessToken(code,kakao_restApi_key);
-
+		
+		if (access_Token == null) {
+			return Util.pure(req, "<script> alert('인증에 실패하였습니다.'); self.close(); </script>");
+		}
+		
 		// 3.사용자토큰으로 로그인한 유저의 정보 받아오기
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
 
@@ -41,16 +47,18 @@ public class KakaoController {
 		if (isSendMessage) {
 			result = "카카오톡 나에게 메시지 보내기에 성공하였습니다.";
 		}
-
+		
 		// 5.session 값 셋팅
 		session.setAttribute("access_Token", access_Token);
 		session.setAttribute("nickname", userInfo.get("nickname"));
 		session.setAttribute("result", result);
 		session.setAttribute("email", userInfo.get("email"));
+		session.setAttribute("emailDomain", userInfo.get("emailDomain"));
 		session.setAttribute("profile_image", userInfo.get("profile_image"));
 		session.setAttribute("thumbnail_image", userInfo.get("thumbnail_image"));
-
-		return "usr/member/kakaoLogin";
+		
+		return Util.pure(req, "<script> window.onload = function() { opener.parent.location='../member/join';"
+				+ " window.close();} </script>");
 	}
 
 	// 앱에서 로그아웃(정보제공 여부 유지)

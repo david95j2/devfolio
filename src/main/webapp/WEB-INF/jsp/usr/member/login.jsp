@@ -87,7 +87,7 @@
 	}
 
 	let DoLoginForm__submited = false;
-
+	
 	function DoLoginForm__submit(form) {
 		if ( DoLoginForm__submited ) {
 			alert('처리중입니다.');

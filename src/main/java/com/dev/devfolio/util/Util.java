@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +37,11 @@ public class Util {
 
 		return sb.toString();
 	}
+	
+	public static String pure(HttpServletRequest req,String resultData) {
+		req.setAttribute("data", resultData);
+		return "common/pure";
+	}		
 	
 	// data 종류 파악
 	public static boolean isEmpty(Object data) {

@@ -20,7 +20,7 @@ public class UsrMemberController {
 	private MemberService memberService;
 	
 	@RequestMapping("usr/member/join")
-	public String showJoinPage() {
+	public String showJoinPage(HttpSession session) {
 		return "usr/member/join";
 	}
 	
@@ -42,7 +42,7 @@ public class UsrMemberController {
 	
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(@RequestParam Map<String, Object> param) {
+	public String doJoin(@RequestParam Map<String, Object> param, HttpSession session) {
 		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
 		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
@@ -52,6 +52,14 @@ public class UsrMemberController {
 		param.put("email", email);
 
 		memberService.join(param);
+		
+		session.removeAttribute("access_Token");
+		session.removeAttribute("nickname");
+		session.removeAttribute("result");
+		session.removeAttribute("email");
+		session.removeAttribute("emailDomain");
+		session.removeAttribute("profile_image");
+		session.removeAttribute("thumbnail_image");		
 		
 		return Util.msgAndReplace(msg,redirectUrl);
 	}

@@ -19,7 +19,7 @@
           <input type="hidden" name="loginPwReal"/>
           <div>
             <div class="text-sm font-bold text-gray-700 tracking-wide">ID</div>
-            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Enter your ID" id="user_id" autofocus="autofocus" name="loginId">
+            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Enter your ID" id="user_id" autofocus="autofocus" name="loginId" value="${email }">
             <div class="text-sm font-bold text-gray-700" id="id_check"></div>      
           </div>
           <div class="mt-8">
@@ -34,7 +34,7 @@
           </div>
           <div class="mt-8">
             <div class="text-sm font-bold text-gray-700 tracking-wide">name</div>
-            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Enter your name" id="user_name" autofocus="autofocus" name="name">
+            <input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Enter your name" id="user_name" autofocus="autofocus" name="name" value="${nickname }">
           	<div class="text-sm font-bold text-gray-700" id="name_check"></div>
           </div>
           <div class="mt-8">
@@ -45,8 +45,8 @@
           <div class="mt-8">
             <div class="text-sm font-bold text-gray-700 tracking-wide">Email Address</div>
             <div class="flex justify-center items-center">
-            	<input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Email ID" id="user_email" autofocus="autofocus" name="emailId">@
-            	<input class="w-full text-center text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Email Domain" id="user_emailDomain" value="" autofocus="autofocus" name="emailDomain">
+            	<input class="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Email ID" id="user_email" autofocus="autofocus" name="emailId" value="${email }">@
+            	<input class="w-full text-center text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-900" type="text" placeholder="Email Domain" id="user_emailDomain" value="${emailDomain }" autofocus="autofocus" name="emailDomain">
             	<select class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="email">
             		<option value="0" >Select</option>
 					<option value="1">직접입력</option>
@@ -95,7 +95,7 @@
 	let JoinForm__checkAndSubmitDone = false;
 
 	// id 규칙
-	const idRule = /^[a-zA-Z0-9]+$/;
+	const idRule = /^[a-zA-Z0-9\\@.]+$/;
 	var idRuleResult = false;
 
 	// 비밀번호 규칙
