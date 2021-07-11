@@ -250,7 +250,7 @@ public class KakaoService {
 				result += line;
 			}
 			// response body : 0이면 성공
-			System.out.println("response body : " + result);
+			System.out.println("response body : " + result);	
 
 			bw.close();
 			br.close();
