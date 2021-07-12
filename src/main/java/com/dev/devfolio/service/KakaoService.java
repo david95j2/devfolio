@@ -101,8 +101,7 @@ public class KakaoService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			System.out.println("response body : " + result);
-
+			
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
 
@@ -110,7 +109,9 @@ public class KakaoService {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			// kakao_account는 이메일, 성별, 연령대 등의 정보 (선택동의항목)
 			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
+			
+			userInfo.put("age_range", kakao_account.get("age_range"));
+			
 			// 정보제공에 동의 X '"email_needs_agreement":true'
 			// 정보제공에 동의 O '"email_needs_agreement":false'
 			boolean email_needs_agreement = kakao_account.getAsJsonObject().get("email_needs_agreement").getAsBoolean();
@@ -204,7 +205,8 @@ public class KakaoService {
 	// 나에게 메시지 보내기
 	public boolean isSendMessage(String access_Token) {
 		// 마찬가지로 access_Token값을 가져와 access_Token값을 통해 로그인되어있는 사용자를 확인합니다.
-		String reqURL = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
+//		String reqURL = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
+		String reqURL = "https://kapi.kakao.com/v2/api/talk/memo/send";
 		try {
 			URL url = new URL(reqURL);
 
@@ -212,23 +214,23 @@ public class KakaoService {
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true); // OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
 			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
+			
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 
 			
 			//json 형식으로 전송 데이터 셋팅
 			JsonObject json = new JsonObject();
-			json.addProperty("object_type", "text");
-			json.addProperty("text", "카카오 메시지 테스트 전송");
-			json.addProperty("button_title", "웹으로 이동"); //button_title은 선택사항입니다.
+			json.addProperty("template_id", "55278");
+//			json.addProperty("text", "카카오 메시지 테스트 전송");
+//			json.addProperty("button_title", "웹으로 이동"); //button_title은 선택사항입니다.
 			// 만약, button_title을 넣지 않으면 버튼명이 디폴트 값으로 "자세히 보기"로 나옵니다.
 			JsonObject link = new JsonObject();
-			link.addProperty("web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
-			link.addProperty("mobile_web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
-																//만약, 카카오개발자사이트에 도메인을 등록하지 않았다면 링크버튼 자체가 나오지 않습니다.
-
-			json.add("link", link.getAsJsonObject());
+//			link.addProperty("web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
+//			link.addProperty("mobile_web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
+//																//만약, 카카오개발자사이트에 도메인을 등록하지 않았다면 링크버튼 자체가 나오지 않습니다.
+//
+//			json.add("link", link.getAsJsonObject());
 
 			sb.append("template_object=" + json);
 
