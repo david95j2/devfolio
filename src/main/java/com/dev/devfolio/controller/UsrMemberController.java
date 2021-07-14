@@ -45,7 +45,7 @@ public class UsrMemberController {
 	public String doJoin(@RequestParam Map<String, Object> param, HttpSession session) {
 		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
 		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
-		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/member/inputDetail");
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/member/input");
 		String loginPwReal = (String) param.get("loginPwReal");
 		
 		param.put("loginPwReal", loginPwReal);
@@ -60,6 +60,11 @@ public class UsrMemberController {
 		
 		return Util.msgAndReplace(msg,redirectUrl);
 	}
+	
+	@RequestMapping("usr/member/input")
+	public String showInputPage() {
+		return "usr/member/inputDetail";
+	}		
 
 	@RequestMapping("usr/member/doInput")
 	@ResponseBody
