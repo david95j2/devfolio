@@ -45,7 +45,7 @@ public class UsrMemberController {
 	public String doJoin(@RequestParam Map<String, Object> param, HttpSession session) {
 		String msg = String.format("%s님 환영합니다.", param.get("nickname"));
 		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
-		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/member/inputDetail");
 		String loginPwReal = (String) param.get("loginPwReal");
 		
 		param.put("loginPwReal", loginPwReal);
@@ -60,6 +60,27 @@ public class UsrMemberController {
 		
 		return Util.msgAndReplace(msg,redirectUrl);
 	}
+
+	@RequestMapping("usr/member/doInput")
+	@ResponseBody
+	public String doInput(@RequestParam Map<String, Object> param, HttpSession session) {
+		String msg = String.format("%s님 가입이 완료되었습니다.", param.get("nickname"));
+		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
+		String loginPwReal = (String) param.get("loginPwReal");
+		
+		param.put("loginPwReal", loginPwReal);
+		param.put("email", email);
+
+		memberService.join(param);
+		
+		session.removeAttribute("isTrue");
+		session.removeAttribute("nickname");
+		session.removeAttribute("email");
+		session.removeAttribute("emailDomain");
+		
+		return Util.msgAndReplace(msg,redirectUrl);
+	}	
 	
 	@RequestMapping("usr/member/login")
 	public String showLoginPage() {
