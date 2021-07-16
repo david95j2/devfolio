@@ -130,7 +130,7 @@
   </div>
 </div>
 
-<script type="text/javascript" src="../part/area.json">
+<script>
 $(function(){
     areaSelectMaker("select[name=addressRegion]");
 });
@@ -141,50 +141,66 @@ var areaSelectMaker = function(target){
         return;
     }
 	
-    var area = JSON.parse(JSON.stringify(data));
-	
-    for(i=0; i<$(target).length; i++){
-        (function(z){
-            var a1 = $(target).eq(z);
-            var a2 = a1.next();
-            var a3 = a2.next();
-
-            //초기화
-            init(a1, true);
-
-            //권역 기본 생성
-            var areaKeys1 = Object.keys(area);
-            areaKeys1.forEach(function(Region){
-                a1.append("<option value="+Region+">"+Region+"</option>");
-            });
-
-            //변경 이벤트
-            $(a1).on("change", function(){
-                init($(this), false);
-                var Region = $(this).val();
-                var keys = Object.keys(area[Region]);
-                keys.forEach(function(Do){
-                    a2.append("<option value="+Do+">"+Do+"</option>");    
-                });
-            });
-
-            $(a2).on("change", function(){
-                a3.empty().append("<option value=''>선택</option>");
-                var Region = a1.val();
-                var Do = $(this).val();
-                var keys = Object.keys(area[Region][Do]);
-                keys.forEach(function(SiGunGu){
-                    a3.append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
-                });
-            });
-        })(i);        
-
-        function init(t, first){
-            first ? t.empty().append("<option value=''>선택</option>") : "";
-            t.next().empty().append("<option value=''>선택</option>");
-            t.next().next().empty().append("<option value=''>선택</option>");
+  	//함수 본문
+    function readJSON(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
         }
+        rawFile.send(null);
     }
+
+  	//함수 사용법
+    readJSON("../../resource/area.json", function(data){
+        var area = JSON.parse(data);
+
+        for(i=0; i<$(target).length; i++){
+            (function(z){
+                var a1 = $(target).eq(z);
+                var a2 = a1.next();
+                var a3 = a2.next();
+
+                //초기화
+                init(a1, true);
+
+                //권역 기본 생성
+                var areaKeys1 = Object.keys(area);
+                areaKeys1.forEach(function(Region){
+                    a1.append("<option value="+Region+">"+Region+"</option>");
+                });
+
+                //변경 이벤트
+                $(a1).on("change", function(){
+                    init($(this), false);
+                    var Region = $(this).val();
+                    var keys = Object.keys(area[Region]);
+                    keys.forEach(function(Do){
+                        a2.append("<option value="+Do+">"+Do+"</option>");    
+                    });
+                });
+
+                $(a2).on("change", function(){
+                    a3.empty().append("<option value=''>선택</option>");
+                    var Region = a1.val();
+                    var Do = $(this).val();
+                    var keys = Object.keys(area[Region][Do]);
+                    keys.forEach(function(SiGunGu){
+                        a3.append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
+                    });
+                });
+            })(i);        
+
+            function init(t, first){
+                first ? t.empty().append("<option value=''>선택</option>") : "";
+                t.next().empty().append("<option value=''>선택</option>");
+                t.next().next().empty().append("<option value=''>선택</option>");
+            }
+        }        
+    });
 }
 </script>
 
