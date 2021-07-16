@@ -40,7 +40,7 @@ public class KakaoController {
 		// 3.사용자토큰으로 로그인한 유저의 정보 받아오기
 		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
 
-		/* (나에게 메시지 보내기 기능 추가) */ 
+
 		// 4.사용자토큰으로 로그인한 유저(본인)에게 카카오 메시지 보내기
 		boolean isSendMessage = kakaoService.isSendMessage(access_Token);
 		String result = "카카오톡 나에게 메시지 보내기에 실패하였습니다.";
@@ -54,6 +54,7 @@ public class KakaoController {
 		}
 		
 		// 5.session 값 셋팅
+		session.setAttribute("access_Token", access_Token);
 		session.setAttribute("isTrue", isTrue);
 		session.setAttribute("nickname", userInfo.get("nickname"));
 		session.setAttribute("email", userInfo.get("email"));
@@ -68,11 +69,10 @@ public class KakaoController {
 	public String logout(HttpSession session) {
 		kakaoService.kakaoLogout((String) session.getAttribute("access_Token"));
 		session.removeAttribute("access_Token");
+		session.removeAttribute("isTrue");
 		session.removeAttribute("nickname");
-		session.removeAttribute("result");
 		session.removeAttribute("email");
-		session.removeAttribute("profile_image");
-		session.removeAttribute("thumbnail_image");
+		session.removeAttribute("emailDomain");
 
 		return "usr/member/kakaoLogout";
 	}
@@ -82,11 +82,10 @@ public class KakaoController {
 	public String unlink(HttpSession session) {
 		kakaoService.kakaoUnlink((String) session.getAttribute("access_Token"));
 		session.removeAttribute("access_Token");
+		session.removeAttribute("isTrue");
 		session.removeAttribute("nickname");
-		session.removeAttribute("result");
 		session.removeAttribute("email");
-		session.removeAttribute("profile_image");
-		session.removeAttribute("thumbnail_image");
+		session.removeAttribute("emailDomain");
 
 		return "usr/member/kakaoLogout";
 	}

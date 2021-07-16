@@ -28,7 +28,6 @@ public class KakaoService {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 
@@ -54,7 +53,6 @@ public class KakaoService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			System.out.println("response body : " + result);
 
 			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
 			// 이 로직 실행을 위해서 pom.xml에 Gson 라이브러리를 추가한 것입니다.
@@ -64,22 +62,16 @@ public class KakaoService {
 			access_Token = element.getAsJsonObject().get("access_token").getAsString();
 			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
-			System.out.println("access_token : " + access_Token);
-			System.out.println("refresh_token : " + refresh_Token);
-
 			br.close();
 			bw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// 사용자토큰을 리턴합니다.
 		return access_Token;
 	}
 
 	public HashMap<String, Object> getUserInfo(String access_Token) {
-		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
 		HashMap<String, Object> userInfo = new HashMap<>();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
@@ -134,18 +126,15 @@ public class KakaoService {
 			userInfo.put("thumbnail_image", thumbnail_image);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// 사용자 정보를 리턴합니다.
 		return userInfo;
 	}
 
 	// 카카오계정 로그아웃
 	public void kakaoLogout(String access_Token) {
 		// 우선 session에 저장되어있는 access_Token값을 가져와 access_Token값을 통해 로그인되어있는 사용자를 확인합니다.
-		// 이후 로그아웃을 진행합니다.
 		String reqURL = "https://kapi.kakao.com/v1/user/logout";
 		try {
 			URL url = new URL(reqURL);
@@ -175,7 +164,6 @@ public class KakaoService {
 	// 카카오계정 연결 해제
 	public void kakaoUnlink(String access_Token) {
 		// 우선 session에 저장되어있는 access_Token값을 가져와 access_Token값을 통해 로그인되어있는 사용자를 확인합니다.
-		// 이후 계정연결을 해제합니다.
 		String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 		try {
 			URL url = new URL(reqURL);
@@ -197,7 +185,6 @@ public class KakaoService {
 			System.out.println(result);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -218,23 +205,7 @@ public class KakaoService {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 
-			
-			//json 형식으로 전송 데이터 셋팅
-			JsonObject json = new JsonObject();
-			json.addProperty("template_id", "55278");
-//			json.addProperty("text", "카카오 메시지 테스트 전송");
-//			json.addProperty("button_title", "웹으로 이동"); //button_title은 선택사항입니다.
-			// 만약, button_title을 넣지 않으면 버튼명이 디폴트 값으로 "자세히 보기"로 나옵니다.
-			JsonObject link = new JsonObject();
-//			link.addProperty("web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
-//			link.addProperty("mobile_web_url", "https://www.naver.com"); // 카카오개발자사이트 앱>앱설정>플랫폼>Web>사이트도메인에 등록한 도메인 입력
-//																//만약, 카카오개발자사이트에 도메인을 등록하지 않았다면 링크버튼 자체가 나오지 않습니다.
-//
-//			json.add("link", link.getAsJsonObject());
-
-			sb.append("template_object=" + json);
-
-			System.out.println(sb.toString());
+			sb.append("template_id=" + "55278");
 
 			bw.write(sb.toString());
 			bw.flush();
@@ -262,7 +233,6 @@ public class KakaoService {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
