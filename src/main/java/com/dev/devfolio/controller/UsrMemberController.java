@@ -1,5 +1,6 @@
 package com.dev.devfolio.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -69,20 +70,13 @@ public class UsrMemberController {
 	@RequestMapping("usr/member/doInput")
 	@ResponseBody
 	public String doInput(@RequestParam Map<String, Object> param, HttpSession session) {
-		String msg = String.format("%s님 가입이 완료되었습니다.", param.get("nickname"));
-		String email = (String) param.get("emailId") + "@" + (String) param.get("emailDomain");
+		String msg = String.format("가입이 완료되었습니다.");
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
-		String loginPwReal = (String) param.get("loginPwReal");
 		
-		param.put("loginPwReal", loginPwReal);
-		param.put("email", email);
-
-		memberService.join(param);
+		String preferredRegion = (String) param.get("region_high") + " / " + (String) param.get("region_middle")+ " / " + (String) param.get("region_low");
+		param.put("preferredRegion", preferredRegion);
 		
-		session.removeAttribute("isTrue");
-		session.removeAttribute("nickname");
-		session.removeAttribute("email");
-		session.removeAttribute("emailDomain");
+		memberService.input(param);
 		
 		return Util.msgAndReplace(msg,redirectUrl);
 	}	

@@ -52,5 +52,9 @@ public class MemberService {
 	
 	public boolean isAdmin(Member actor) {
 		return actor.getAuthLevel() == 7;
+	}
+
+	public Object input(Map<String, Object> param) {
+		return memberDao.input(param);
 	}	
 }

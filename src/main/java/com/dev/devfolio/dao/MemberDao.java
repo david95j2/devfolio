@@ -18,4 +18,6 @@ public interface MemberDao {
 	Member getMemberByAuthKey(@Param("authKey") String authKey);
 
 	Member getMemberById(@Param("id") int id);
+
+	Object input(Map<String, Object> param);
 }

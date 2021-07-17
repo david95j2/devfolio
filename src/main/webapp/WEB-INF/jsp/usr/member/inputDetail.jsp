@@ -18,19 +18,19 @@
     <div class="mt-8 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-8 xl:px-24 xl:max-w-2xl">
       <h2 class="text-center text-3xl text-color-1 font-display font-semibold lg:text-left xl:text-3xl xl:text-bold">INFORMATION</h2>
       <div class="mt-12">
-        <form>
+        <form class="input" action="doInput" method="POST" onsubmit="InputForm__checkAndSubmit(this); return false;">
           <div class="info-preferArea mb-8">
             <div class="font-bold text-xl mb-2">
               <h1>선호지역</h1>
             </div>
             <div class="grid grid-cols-3 gap-2">
-              <select name="addressRegion" id="addressRegion1" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
+              <select name="region_high" id="region_high" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
               </select>
               
-              <select name="addressDo" id="addressDo1" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
+              <select name="region_middle" id="region_middle" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
               </select>
               
-              <select name="addressSiGunGu" id="addressSiGunGu1" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
+              <select name="region_low" id="region_low" class="w-full text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" name="animals">
               </select>
               
             </div>
@@ -121,7 +121,7 @@
           </div>
 
           <div class="mt-10">
-            <button class="login-btn bg-main text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline shadow-lg">등록
+            <button type="submit" class="login-btn bg-main text-gray-100 p-4 w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline shadow-lg">등록
             </button>
           </div>
         </form>
@@ -132,7 +132,7 @@
 
 <script>
 $(function(){
-    areaSelectMaker("select[name=addressRegion]");
+    areaSelectMaker("select[name=region_high]");
 });
 
 var areaSelectMaker = function(target){
@@ -200,7 +200,12 @@ var areaSelectMaker = function(target){
                 t.next().next().empty().append("<option value=''>선택</option>");
             }
         }        
-    });
+    }); 	
+}
+
+function InputForm__checkAndSubmit(form) {	
+	form.submit();
+	JoinForm__checkAndSubmitDone = true;
 }
 </script>
 
