@@ -52,8 +52,9 @@ public class UsrMemberController {
 		param.put("loginPwReal", loginPwReal);
 		param.put("email", email);
 
-		memberService.join(param);
-		
+		int id = memberService.join(param);
+		System.out.println(id+"id는");
+		session.setAttribute("tempInput", id);
 		session.removeAttribute("isTrue");
 		session.removeAttribute("nickname");
 		session.removeAttribute("email");
@@ -70,11 +71,14 @@ public class UsrMemberController {
 	@RequestMapping("usr/member/doInput")
 	@ResponseBody
 	public String doInput(@RequestParam Map<String, Object> param, HttpSession session) {
+		int id = (int) session.getAttribute("tempInput");
+		
 		String msg = String.format("가입이 완료되었습니다.");
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "/usr/home/main");
 		
 		String preferredRegion = (String) param.get("region_high") + " / " + (String) param.get("region_middle")+ " / " + (String) param.get("region_low");
 		param.put("preferredRegion", preferredRegion);
+		param.put("id", id);
 		
 		memberService.input(param);
 		

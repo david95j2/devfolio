@@ -14,8 +14,8 @@ public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
 
-	public void join(Map<String, Object> param) {
-		memberDao.join(param);
+	public int join(Map<String, Object> param) {
+		return memberDao.join(param);
 	}
 	
 	public int loginIdCheck(String loginId) {	
