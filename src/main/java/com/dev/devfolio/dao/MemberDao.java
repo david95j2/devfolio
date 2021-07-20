@@ -19,5 +19,5 @@ public interface MemberDao {
 
 	Member getMemberById(@Param("id") int id);
 
-	Object input(Map<String, Object> param);
+	void input(Map<String, Object> param);
 }
