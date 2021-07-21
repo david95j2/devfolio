@@ -95,11 +95,18 @@ public class UsrMemberController {
 	public String doLogin(String loginId, String loginPwReal, String redirectUrl, HttpSession session) {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		if(member == null) return Util.msgAndBack("존재하지 않는 아이디입니다.");
-		else if (member.getLoginPw().equals(loginPwReal) == false) return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
+		if (member.getPreferredRegion().isEmpty() | member.getSkill().isEmpty()) {
+			session.setAttribute("tempInput", member.getId());
+		}
+		
+		if(member.getAuthKey() == null) {
+			return Util.msgAndBack("존재하지 않는 아이디입니다.");
+		} else if (member.getLoginPw().equals(loginPwReal) == false) {
+			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
+		}
 		
 		session.setAttribute("loginedMemberId", member.getId());
-
+		
 		String msg = String.format("%s님 환영합니다.", member.getNickname());
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "/usr/home/main");

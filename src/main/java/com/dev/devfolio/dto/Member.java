@@ -23,5 +23,7 @@ public class Member {
 	private String nickname;
 	private String cellphoneNo;
 	private String email;
+	private String preferredRegion;
+	private String skill;
 	private String extra__thumbImg;	
 }

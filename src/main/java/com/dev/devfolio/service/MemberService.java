@@ -54,7 +54,7 @@ public class MemberService {
 		return actor.getAuthLevel() == 7;
 	}
 
-	public Object input(Map<String, Object> param) {
-		return memberDao.input(param);
+	public void input(Map<String, Object> param) {
+		memberDao.input(param);
 	}	
 }
