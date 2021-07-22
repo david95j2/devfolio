@@ -17,6 +17,8 @@ import com.google.gson.JsonParser;
 
 @Service
 public class KakaoService {
+	
+	private String afterUrl = "http://localhost:8090/usr/kakao/doLogin";
 
 	public String getAccessToken(String authorize_code, String kakao_restApi_key) {
 		String access_Token = "";
@@ -36,7 +38,7 @@ public class KakaoService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id="+kakao_restApi_key); // 본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8090/usr/kakao/doLogin"); // 본인이 설정해 놓은 경로
+			sb.append("&redirect_uri="+afterUrl); // 본인이 설정해 놓은 경로
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
 			bw.flush();
@@ -156,7 +158,6 @@ public class KakaoService {
 			System.out.println(result);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -182,7 +183,6 @@ public class KakaoService {
 			while ((line = br.readLine()) != null) {
 				result += line;
 			}
-			System.out.println(result);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -193,6 +193,8 @@ public class KakaoService {
 	public boolean isSendMessage(String access_Token) {
 		// 마찬가지로 access_Token값을 가져와 access_Token값을 통해 로그인되어있는 사용자를 확인합니다.
 //		String reqURL = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
+		
+		// custom Message
 		String reqURL = "https://kapi.kakao.com/v2/api/talk/memo/send";
 		try {
 			URL url = new URL(reqURL);

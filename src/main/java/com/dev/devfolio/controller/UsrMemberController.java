@@ -53,7 +53,7 @@ public class UsrMemberController {
 		param.put("email", email);
 
 		int id = memberService.join(param);
-		System.out.println(id+"id는");
+
 		session.setAttribute("tempInput", id);
 		session.removeAttribute("isTrue");
 		session.removeAttribute("nickname");
