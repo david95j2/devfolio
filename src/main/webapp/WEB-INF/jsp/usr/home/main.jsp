@@ -7,7 +7,7 @@
 <h1>메인페이지</h1>
 <h2>추후 구현</h2>
 
-<br />
+<br/>
 
 
 <c:if test="${ isLogined == false }">
