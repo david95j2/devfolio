@@ -120,4 +120,9 @@ public class UsrMemberController {
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../home/main");
 	}	
+	
+	@RequestMapping("usr/member/info")
+	public String showMyPage() {
+		return "usr/member/mypage";
+	}	
 }
